@@ -68,5 +68,7 @@ elif num_of_vector == 1:
     ax.set_zlim(-(padding+z), padding+z)
     ax.grid(alpha=0.4)
 
+    plt.show()
+
 else:
     print("Enter a valid number")
