@@ -5,13 +5,24 @@ num_of_vector = int(input("Enter 0 for 2D vector or 1 for 3D vector : "))
 
 if num_of_vector == 0:
     v1 = list(map(int, input("Enter vector one coordinates: ").split()))
-    v2 = list(map(int, input("Enter vector one coordinates: ").split()))
+    v2 = list(map(int, input("Enter vector two coordinates: ").split()))
+
+    if len(v1) != 2 or len(v2) != 2:
+        print("Please enter exactly two coordinates.")
+        exit()
 
     print(f"Vector 1 : {v1}")
     print(f"Vector 2 : {v2}")
 
+    # Finding determinant -
+    det = v1[0]*v2[1] - v1[1]*v2[0]
+    if det == 0:
+        print(f"The determinant is {det} hence, the vectors are linearly dependent")
+    else:
+        print(f"The determinant is {det} hence, the vectors are linearly independent")
+
     plt.quiver(0, 0, v1[0], v1[1], angles = 'xy', scale_units = 'xy', scale = 1, color = "blue", label = "Vector 1")
-    plt.quiver(0, 0, v2[0], v2[1], angles = 'xy', scale_units = 'xy', scale = 1, color = "green", label = "Vector 2")
+    plt.quiver(0, 0, v2[0], v2[1], angles = 'xy', scale_units = 'xy', scale = 1, color = "darkorange", label = "Vector 2")
 
     max_x = max(abs(v1[0]), abs(v2[0]))
     max_y = max(abs(v1[1]), abs(v2[1]))
@@ -21,14 +32,21 @@ if num_of_vector == 0:
     plt.xlim(-(max_x + padding), max_x + padding)
     plt.ylim(-(max_y + padding), max_y + padding)
 
+    plt.title("2D Vector Independence Visualizer")
+    plt.xlabel("X-axis")
+    plt.ylabel("Y-axis")
     plt.axhline(0, color='black', linewidth=1)
     plt.axvline(0, color='black', linewidth=1)
+    plt.scatter(v1[0], v1[1], color="blue")
+    plt.scatter(v2[0], v2[1], color="darkorange")
 
     plt.grid(True)
     ax = plt.gca()
+    ax.text(0.02, 0.98, f"Determinant = {det}", transform=ax.transAxes, fontsize=11, verticalalignment="top", bbox=dict(facecolor="white", alpha=0.8))
     ax.set_aspect('equal', adjustable='box')
 
     plt.legend()
+    plt.savefig("vector_plot.png", dpi=300)
     plt.show()
 
 elif num_of_vector == 1:
